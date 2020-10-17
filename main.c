@@ -8,10 +8,11 @@
 #include "RCC_private.h"
 #include "DEFINES.h"
 
-u8 bspd_read,bspd_relay_read,imd_read,imd_relay_read,bms_read;
+
 
 void setup(void);
 void loop(void);
+u8 bspd_read,bspd_relay_read,imd_read,imd_relay_read,bms_read;
 int main(void)
 {
     setup();
@@ -45,12 +46,40 @@ void setup(void)
     //*DIGITAL OUTPUTS*//
     MGPIO_voidSetPinDirection(GPIOA,BRAKE_LIGHT_RELAY,OUTPUT);
     MGPIO_voidSetPinDirection(GPIOA,FAN_RELAY,OUTPUT);
+    MGPIO_voidSetPinDirection(GPIOA,PUMP_RELAY,OUTPUT);
     MGPIO_voidSetPinDirection(GPIOA,EVMS_RELAY,OUTPUT);
 
 }
 
+
+
 void loop(void)
 {
+
+    MGPIO_voidSetPinValue(GPIOA,FAN_RELAY,HIGH);    //enables the accumulator fan
+    MGPIO_voidSetPinValue(GPIOA,PUMP_RELAY,HIGH);    //enables the water pump
+
+    bspd_read=MGPIO_u8GetPinValue(GPIOB,BSPD_FB);
+    //delay(1);
+    bspd_relay_read=MGPIO_u8GetPinValue(GPIOB,BSPD_RELAY_FB);
+    if(bspd_relay_read!=bspd_read)     //if the bspd relay didnt open on bspd error
+    {
+        MGPIO_voidSetPinValue(GPIOA,EVMS_RELAY,0); //open shutdown circuit
+    }
+
+    imd_read=MGPIO_u8GetPinValue(GPIOB,IMD_FB);
+    //delay(1);
+    imd_relay_read=MGPIO_u8GetPinValue(GPIOB,IMD_RELAY_FB);
+    if(imd_read!=imd_relay_read)   //if imd detects an error and its realy doesnt open
+    {
+        MGPIO_voidSetPinValue(GPIOA,EVMS_RELAY,LOW); //open shutdown circuit
+    }
+
+    bms_read=MGPIO_u8GetPinValue(GPIOA,BMS_FB);
+    if(bms_read)  //bms detects an error
+    {
+         MGPIO_voidSetPinValue(GPIOA,EVMS_RELAY,0); //open shutdown circuit
+    }
 
     
 

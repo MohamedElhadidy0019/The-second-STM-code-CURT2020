@@ -57,7 +57,7 @@
 
 
 /* Value Defines */
-#define Low 	0
+#define LOW 	0
 #define HIGH 	1
 
 
