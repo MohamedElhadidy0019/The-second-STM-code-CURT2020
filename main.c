@@ -8,6 +8,7 @@
 #include "RCC_private.h"
 #include "DEFINES.h"
 
+#include "SYSTICK_interface.h"
 
 
 void setup(void);
@@ -56,11 +57,14 @@ void setup(void)
 void loop(void)
 {
 
+    //   !!!!!!!!   Missing analog function to read from brake sensors
+
+
     MGPIO_voidSetPinValue(GPIOA,FAN_RELAY,HIGH);    //enables the accumulator fan
     MGPIO_voidSetPinValue(GPIOA,PUMP_RELAY,HIGH);    //enables the water pump
 
     bspd_read=MGPIO_u8GetPinValue(GPIOB,BSPD_FB);
-    //delay(1);
+    delay_ms(1);
     bspd_relay_read=MGPIO_u8GetPinValue(GPIOB,BSPD_RELAY_FB);
     if(bspd_relay_read!=bspd_read)     //if the bspd relay didnt open on bspd error
     {
@@ -68,7 +72,7 @@ void loop(void)
     }
 
     imd_read=MGPIO_u8GetPinValue(GPIOB,IMD_FB);
-    //delay(1);
+    delay_ms(1);
     imd_relay_read=MGPIO_u8GetPinValue(GPIOB,IMD_RELAY_FB);
     if(imd_read!=imd_relay_read)   //if imd detects an error and its realy doesnt open
     {

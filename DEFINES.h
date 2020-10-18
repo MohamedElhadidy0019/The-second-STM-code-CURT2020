@@ -8,7 +8,9 @@
 #define BMS_FB                  PIN8    //PA8,digital input,INTERRUPT
 #define BRAKE_LIGHT_RELAY       PIN9    //PA9,digital output
 #define FAN_RELAY               PIN10   //PA10,digital output
-#define EVMS_RELAY              PIN11   //PA11,digital output
+#define PUMP_RELAY              PIN11   //PA11,digital output
+#define EVMS_RELAY              PIN12   //PA12,digital output
+
 
 
 
