@@ -1,4 +1,8 @@
 
+/* Includes */
+#include <stddef.h>
+#include "stm32f10x.h"
+
 
 #include "STD_TYPES.H"
 #include "BIT_MATH.H"
