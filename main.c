@@ -31,11 +31,6 @@ void setup(void)
     RCC_voidEnableClock(RCC_APB2,2);
     RCC_voidEnableClock(RCC_APB2,3);
     RCC_voidEnableClock(RCC_APB2,4);
-
-
-    //*Enable Systick*//
-    Systick_init();
-
     ///////////////////////////////****GPIO Enables****//////////////////////
 
     //*ANALOG INPUTS*//
